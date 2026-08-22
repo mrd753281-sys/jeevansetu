@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>JeevanSetu - Emergency Action Room</title>
+ <link
+        rel="stylesheet"
+        href="css/style.css">
+
+        //css for emergency page
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:Arial, sans-serif}
+body{background:#fffefe;color:#fff;min-height:100vh}
+.header{padding:15px;background:#03024f;display:flex;justify-content:space-between;align-items:center}
+.live-dot{width:10px;height:10px;background:red;border-radius:50%;display:inline-block;animation:pulse 1s infinite}
+@keyframes pulse{0%{opacity:1}100%{opacity:0.2}}
+.container{padding:20px;max-width:500px;margin:auto}
+.card{background:#030159;border-radius:15px;padding:20px;margin-bottom:15px;border:1px solid #333}
+.type-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.type-btn{background:#010446;border:2px solid #dd0d0d;border-radius:12px;padding:18px;text-align:center;cursor:pointer;font-size:16px;transition:0.2s}
+.type-btn.active{border-color:#ff2a2a;background:#ff2a2a22}
+.big-btn{width:100%;padding:18px;border:none;border-radius:12px;font-size:18px;font-weight:bold;cursor:pointer;margin-top:10px}
+.btn-red{background:#ff2a2a;color:#fff}
+.btn-dark{background:#333;color:#fff}
+.timeline{border-left:2px solid #333;margin-left:10px;padding-left:20px}
+.t-step{position:relative;margin-bottom:20px}
+.t-step::before{content:'';width:12px;height:12px;background:#444;border-radius:50%;position:absolute;left:-27px;top:3px}
+.t-step.done::before{background:#00ff88}
+.hidden{display:none}
+#voiceStatus{color:#00ff88;margin-top:8px}
+</style>
+</head>
+<body>
+     <nav class="main-navigation">
+
+    <a href="index.html">
+        🏠 Home
+    </a>
+
+    <a href="assistant.html">
+        🤖 AI Assistant
+    </a>
+
+    <a href="emergency.html">
+        🚨 Emergency
+    </a>
+
+    <a href="first-aid.html">
+        🩹 First Aid
+    </a>
+
+    <a href="contacts.html">
+        📞 Contacts
+    </a>
+
+    <a href="report.html">
+        📝 Report
+    </a>
+
+</nav>
+
+<div class="header">
+  <b>🚑 JeevanSetu - EMERGENCY MODE</b>
+  <span><span class="live-dot"></span> LIVE</span>
+</div>
+
+<div class="container">
+  <!-- STEP 1 -->
+  <div id="step1" class="card">
+    <h3>STEP 1: Which Type Of Emergency?</h3><br>
+    <div class="type-grid">
+      <div class="type-btn" onclick="selectType(this,'Medical')">🚑<br>Medical</div>
+      <div class="type-btn" onclick="selectType(this,'Accident')">💥<br>Accident</div>
+      <div class="type-btn" onclick="selectType(this,'Women Safety')">👩<br>Women Safety</div>
+      <div class="type-btn" onclick="selectType(this,'Fire')">🔥<br>Fire</div>
+      <div class="type-btn" onclick="selectType(this,'Child/Senior')">🧒<br>Child/Senior</div>
+      <div class="type-btn" onclick="selectType(this,'Other')">🆘<br>Other</div>
+    </div>
+    <button class="big-btn btn-red" onclick="goStep2()">NEXT STEP →</button>
+  </div>
+
+  <!-- STEP 2 -->
+  <div id="step2" class="card hidden">
+    <h3>STEP 2: Auto Details</h3><br>
+    <p style="color: #fff;" Location: <span style="color: #fff;" id="locText">Location le rahe hain...</span></p>
+    <p style="color: #fff;" Time: <span style="color: #fff;" id="timeText"></span></p>
+    <p style="color: #fff;" Type: <span style="color: #fff;" id="selectedTypeText"></span></p>
+    <hr style="margin:15px 0;border-color:#b50f0f">
+    <button class="big-btn btn-dark" onclick="recordVoice()">🎤 5 Sec Voice Note </button>
+    <p id="voiceStatus"></p>
+    <button class="big-btn btn-dark" onclick="openCamera()">📸 Photo (Evidence)</button>
+    <video id="preview" autoplay playsinline style="width:100%;margin-top:10px;border-radius:10px;display:none"></video>
+    <button class="big-btn btn-red" onclick="startEmergency()">🚨 SOS START KARO</button>
+  </div>
+
+  <!-- STEP 3 -->
+  <div id="step3" class="card hidden">
+    <h3>STEP 3: Help Track ho rahi hai</h3><br>
+    <div class="timeline">
+      <div class="t-step done" id="t1">SOS Sent ✓</div>
+      <div class="t-step done" id="t2">Location Shared ✓</div>
+      <div class="t-step" id="t3">Emergency Contact On sanding the notification...</div>
+      <div class="t-step" id="t4">Search In The Help In Nearby...</div>
+    </div>
+    <button class="big-btn btn-dark" onclick="shareWhatsApp()">📲 Send WhatsApp in Location</button>
+    <button class="big-btn btn-dark" onclick="fakeCall()">📞 Call (Police)</button>
+    <button class="big-btn btn-dark" onclick="sirenOn()">🔊 Siren + Vibrate ON</button>
+    <iframe id="mapFrame" style="width:100%;height:250px;border:0;border-radius:12px;margin-top:15px" loading="lazy"></iframe>
+  </div>
+</div>
+
+<script>
+let emergencyData = {type:'', lat:'', lon:'', voice:false}
+function selectType(el,type){document.querySelectorAll('.type-btn').forEach(b=>b.classList.remove('active'));el.classList.add('active');emergencyData.type=type}
+function goStep2(){
+  if(!emergencyData.type){alert('Pehle Emergency Type select karo');return}
+  document.getElementById('step1').classList.add('hidden');
+  document.getElementById('step2').classList.remove('hidden');
+  document.getElementById('selectedTypeText').innerText = emergencyData.type;
+  document.getElementById('timeText').innerText = new Date().toLocaleString();
+  // Location
+  navigator.geolocation.getCurrentPosition(pos=>{
+    emergencyData.lat=pos.coords.latitude; emergencyData.lon=pos.coords.longitude;
+    document.getElementById('locText').innerText = `${pos.coords.latitude.toFixed(4)}, ${pos.coords.longitude.toFixed(4)}`;
+    document.getElementById('mapFrame').src = `https://www.google.com/maps?q=${pos.coords.latitude},${pos.coords.longitude}&z=16&output=embed`;
+  },()=>{document.getElementById('locText').innerText='Location ON karo';})
+}
+function recordVoice(){
+  document.getElementById('voiceStatus').innerText='Recording 5 sec... bolo kya hua';
+  navigator.mediaDevices.getUserMedia({audio:true}).then(stream=>{
+    let rec = new MediaRecorder(stream); rec.start();
+    setTimeout(()=>{rec.stop(); emergencyData.voice=true; document.getElementById('voiceStatus').innerText='✓ Voice Note Saved';},5000);
+  }).catch(()=>alert('Mic permission do'));
+}
+function openCamera(){
+  let video=document.getElementById('preview'); video.style.display='block';
+  navigator.mediaDevices.getUserMedia({video:true}).then(s=>video.srcObject=s);
+}
+function startEmergency(){
+  document.getElementById('step2').classList.add('hidden');
+  document.getElementById('step3').classList.remove('hidden');
+  // Save to localStorage as Log
+  let logs = JSON.parse(localStorage.getItem('jeevan_logs')||'[]');
+  logs.push({...emergencyData, time:new Date().toLocaleString()});
+  localStorage.setItem('jeevan_logs', JSON.stringify(logs));
+  // Timeline animation
+  setTimeout(()=>document.getElementById('t3').classList.add('done'),2000);
+  setTimeout(()=>{document.getElementById('t4').classList.add('done'); document.getElementById('t4').innerText='Nearby Hospitals/Police Found ✓'},4000);
+  navigator.vibrate([500,200,500]);
+}
+function shareWhatsApp(){
+  let msg = `HELP! JeevanSetu SOS - ${emergencyData.type} Emergency. Location: https://www.google.com/maps?q=${emergencyData.lat},${emergencyData.lon}`;
+  window.open(`https://wa.me/?text=${encodeURIComponent(msg)}`);
+}
+function fakeCall(){alert('📞 Incoming Call: Papa... (5 sec baad)'); setTimeout(()=>{window.location.href='tel:+91XXXXXXXXXX'},1000)}
+function sirenOn(){let audio=new Audio('https://actions.google.com/sounds/v1/alarms/alarm_clock.ogg');audio.loop=true;audio.play(); navigator.vibrate([1000,500,1000,500,1000]); alert('Siren ON - Band karne ke liye page reload karo');}
+</script>
+</body>
+</html>

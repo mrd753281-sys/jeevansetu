@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>JeevanSetu | Emergency Assistance</title>
+
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+
+    <nav class="main-navigation">
+
+    <a href="index.html">
+        🏠 Home
+    </a>
+
+    <a href="assistant.html">
+        🤖 AI Assistant
+    </a>
+
+    <a href="emergency.html">
+        🚨 Emergency
+    </a>
+
+    <a href="first-aid.html">
+        🩹 First Aid
+    </a>
+
+    <a href="contacts.html">
+        📞 Contacts
+    </a>
+
+    <a href="report.html">
+        📝 Report
+    </a>
+
+</nav>
+
+    <!-- HEADER -->
+    <header class="header">
+        <div class="logo">
+            <span class="logo-icon">✚</span>
+            <div>
+                <h1>JeevanSetu</h1>
+                <p>Emergency Assistance</p>
+            </div>
+        </div>
+
+        <button class="location-btn" onclick="getLocation()">
+            📍 My Location
+        </button>
+    </header>
+
+
+    <!-- HERO -->
+    <main>
+
+        <section class="hero">
+
+            <div class="hero-text">
+
+                <span class="badge">● Emergency Support Platform</span>
+
+                <h2 style="color:#000">
+                    Help when you need it.
+                    <span>Fast.</span>
+                </h2>
+
+                <p style="color:#000">
+                    JeevanSetu connects people with emergency assistance,
+                    location sharing, first-aid guidance and trusted contacts
+                    when every second matters.
+                </p>
+
+                <div class="hero-buttons">
+
+                    <button class="sos-btn" onclick="activateSOS()">
+                        <strong>🚨 SOS</strong>
+                        <small>GET EMERGENCY HELP</small>
+                    </button>
+
+                    <button class="secondary-btn" onclick="getLocation()">
+                        📍 Share My Location
+                    </button>
+
+                </div>
+
+            </div>
+
+
+            <!-- EMERGENCY CARD -->
+            <div class="emergency-card">
+
+                <div class="pulse-circle">
+                    🚨
+                </div>
+
+                <h3>Need Immediate Help?</h3>
+
+                <p>
+                    Use the SOS button to quickly access emergency services
+                    and share your location.
+                </p>
+
+                <div class="status">
+                    <span></span>
+                    System Ready
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- SERVICES -->
+       <section class="services">
+
+    <div class="section-heading">
+        <span>QUICK ACCESS</span>
+        <h2>Emergency Services</h2>
+        <p>Get the help you need without wasting time.</p>
+    </div>
+
+    <div class="service-grid">
+
+        <!-- AMBULANCE -->
+        <div class="service-card">
+
+            <div class="service-icon">🚑</div>
+
+            <h3>Ambulance</h3>
+
+            <p>
+                Medical emergency assistance
+            </p>
+
+            <button
+                type="button"
+                onclick="callService('108')">
+                Call 108 →
+            </button>
+
+        </div>
+
+
+        <!-- POLICE -->
+        <div class="service-card">
+
+            <div class="service-icon">🚔</div>
+
+            <h3>Police</h3>
+
+            <p>
+                Immediate police assistance
+            </p>
+
+            <button
+                type="button"
+                onclick="callService('112')">
+                Call 112 →
+            </button>
+
+        </div>
+
+
+        <!-- FIRE -->
+        <div class="service-card">
+
+            <div class="service-icon">🚒</div>
+
+            <h3>Fire & Rescue</h3>
+
+            <p>
+                Fire and rescue emergency
+            </p>
+
+            <button
+                type="button"
+                onclick="callService('101')">
+                Call 101 →
+            </button>
+
+        </div>
+
+
+        <!-- HOSPITAL -->
+        <div class="service-card">
+
+            <div class="service-icon">🏥</div>
+
+            <h3>Find Hospital</h3>
+
+            <p>
+                Locate nearby medical help
+            </p>
+
+            <button
+                type="button"
+                onclick="findHospital()">
+                Find Nearby →
+            </button>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+        <!-- FEATURES -->
+        <section class="features">
+
+            <div class="feature">
+                <span>📍</span>
+                <div>
+                    <h3>Live Location</h3>
+                    <p>Share your current location during emergencies.</p>
+                </div>
+            </div>
+
+
+            <div class="feature">
+                <span>👨‍👩‍👧</span>
+                <div>
+                    <h3>Trusted Contacts</h3>
+                    <p>Keep your emergency contacts ready.</p>
+                </div>
+            </div>
+
+
+            <div class="feature">
+                <span>🩹</span>
+                <div>
+                    <h3>First Aid</h3>
+                    <p>Get quick guidance while help is coming.</p>
+                </div>
+            </div>
+
+
+            <div class="feature">
+                <span>🤖</span>
+                <div>
+                    <h3>AI Assistant</h3>
+                    <p>Get intelligent emergency guidance.</p>
+                </div>
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <!-- FOOTER -->
+    <footer>
+        <strong>JeevanSetu</strong>
+        <span> | </span>
+        Emergency Assistance Platform
+        <p>Built for safer communities.</p>
+    </footer>
+
+
+    <script src="js/app.js"></script>
+
+</body>
+</html>

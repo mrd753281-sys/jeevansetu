@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0">
+
+    <title>AI Assistant | JeevanSetu</title>
+
+    <link
+        rel="stylesheet"
+        href="css/style.css">
+
+</head>
+
+<body>
+
+    <nav class="main-navigation">
+
+    <a href="index.html">
+        🏠 Home
+    </a>
+
+    <a href="assistant.html">
+        🤖 AI Assistant
+    </a>
+
+    <a href="emergency.html">
+        🚨 Emergency
+    </a>
+
+    <a href="first-aid.html">
+        🩹 First Aid
+    </a>
+
+    <a href="contacts.html">
+        📞 Contacts
+    </a>
+
+    <a href="report.html">
+        📝 Report
+    </a>
+
+</nav>
+
+<header class="header">
+
+    <div class="logo">
+
+        <span class="logo-icon">✚</span>
+
+        <div>
+
+            <h1>JeevanSetu</h1>
+
+            <p>Emergency Assistance</p>
+
+        </div>
+
+    </div>
+
+    <a
+        href="index.html"
+        class="back-home">
+
+        ← Home
+
+    </a>
+
+</header>
+
+
+<main class="assistant-page">
+
+    <!-- HEADING -->
+
+    <section class="assistant-heading">
+
+        <span>INTELLIGENT EMERGENCY SUPPORT</span>
+
+        <h2>🤖 JeevanSetu AI Assistant</h2>
+
+        <p>
+            Get quick emergency guidance and safety
+            information when you need it.
+        </p>
+
+    </section>
+
+
+    <!-- ASSISTANT CARD -->
+
+    <section class="assistant-container">
+
+        <!-- AI HEADER -->
+
+        <div class="assistant-header">
+
+            <div class="assistant-avatar">
+                🤖
+            </div>
+
+            <div>
+
+                <h3>
+                    JeevanSetu Assistant
+                </h3>
+
+                <span class="assistant-status">
+                    <span></span>
+                    Online
+                </span>
+
+            </div>
+
+        </div>
+
+
+        <!-- CHAT -->
+
+        <div
+            id="chatMessages"
+            class="chat-messages">
+
+            <div class="chat-message bot-message">
+
+                <div class="message-avatar">
+                    🤖
+                </div>
+
+                <div class="message-content">
+
+                    <strong>
+                        JeevanSetu Assistant
+                    </strong>
+
+                    <p>
+                        Hello! 👋 I'm JeevanSetu's
+                        emergency assistant.
+                    </p>
+
+                    <p>
+                        Tell me what is happening and
+                        I will guide you with basic
+                        emergency steps.
+                    </p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- QUICK QUESTIONS -->
+
+        <div class="quick-actions">
+
+            <button onclick="sendQuickMessage('Someone is bleeding')">
+                🩸 Bleeding
+            </button>
+
+            <button onclick="sendQuickMessage('Someone has a burn')">
+                🔥 Burn
+            </button>
+
+            <button onclick="sendQuickMessage('Someone is unconscious')">
+                😵 Unconscious
+            </button>
+
+            <button onclick="sendQuickMessage('Someone has breathing difficulty')">
+                🫁 Breathing
+            </button>
+
+            <button onclick="sendQuickMessage('Someone has a snake bite')">
+                🐍 Snake Bite
+            </button>
+
+            <button onclick="sendQuickMessage('There is an electric shock')">
+                ⚡ Electric Shock
+            </button>
+
+        </div>
+
+
+        <!-- INPUT -->
+
+        <form
+            id="assistantForm"
+            class="assistant-input-area">
+
+            <input
+                type="text"
+                id="assistantInput"
+                placeholder="Describe the emergency..."
+                autocomplete="off"
+                required>
+
+            <button
+                type="submit">
+
+                ➤
+
+            </button>
+
+        </form>
+
+
+        <!-- EMERGENCY -->
+
+        <!-- ==========================================
+     QUICK EMERGENCY BUTTONS
+     STEP 8.4
+========================================== -->
+
+<section class="quick-emergency">
+
+    <div class="quick-emergency-heading">
+        <span>QUICK HELP</span>
+        <h3>What is happening?</h3>
+        <p>Select an emergency for instant guidance.</p>
+    </div>
+
+    <div class="quick-emergency-grid">
+
+        <button
+            type="button"
+            class="quick-emergency-btn"
+            onclick="quickEmergency('bleeding')">
+            🩸
+            <span>Bleeding</span>
+        </button>
+
+        <button
+            type="button"
+            class="quick-emergency-btn"
+            onclick="quickEmergency('burns')">
+            🔥
+            <span>Burn</span>
+        </button>
+
+        <button
+            type="button"
+            class="quick-emergency-btn"
+            onclick="quickEmergency('breathing')">
+            🫁
+            <span>Breathing</span>
+        </button>
+
+        <button
+            type="button"
+            class="quick-emergency-btn"
+            onclick="quickEmergency('cpr')">
+            ❤️
+            <span>CPR</span>
+        </button>
+
+        <button
+            type="button"
+            class="quick-emergency-btn"
+            onclick="quickEmergency('snakebite')">
+            🐍
+            <span>Snake Bite</span>
+        </button>
+
+        <button
+            type="button"
+            class="quick-emergency-btn"
+            onclick="quickEmergency('electric')">
+            ⚡
+            <span>Electric Shock</span>
+        </button>
+
+        <button
+            type="button"
+            class="quick-emergency-btn"
+            onclick="quickEmergency('fracture')">
+            🦴
+            <span>Fracture</span>
+        </button>
+
+        <button
+            type="button"
+            class="quick-emergency-btn"
+            onclick="quickEmergency('fainting')">
+            😵
+            <span>Unconscious</span>
+        </button>
+
+    </div>
+
+</section>
+
+        <div class="assistant-emergency">
+
+            <strong>
+                🚨 Life-threatening emergency?
+            </strong>
+
+            <p>
+                Call emergency services immediately.
+            </p>
+
+            <a
+                href="tel:112">
+
+                📞 Call Emergency 112
+
+            </a>
+
+        </div>
+
+    </section>
+
+</main>
+
+
+<footer>
+
+    <strong>
+        JeevanSetu
+    </strong>
+
+    <span>
+        |
+    </span>
+
+    Emergency Assistance Platform
+
+    <p>
+        Smart emergency guidance for safer communities.
+    </p>
+
+</footer>
+
+
+<script src="js/assistant.js"></script>
+
+</body>
+
+</html>

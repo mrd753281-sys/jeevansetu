@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Trusted Contacts | JeevanSetu</title>
+
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+
+    <nav class="main-navigation">
+
+    <a href="index.html">
+        🏠 Home
+    </a>
+
+    <a href="assistant.html">
+        🤖 AI Assistant
+    </a>
+
+    <a href="emergency.html">
+        🚨 Emergency
+    </a>
+
+    <a href="first-aid.html">
+        🩹 First Aid
+    </a>
+
+    <a href="contacts.html">
+        📞 Contacts
+    </a>
+
+    <a href="report.html">
+        📝 Report
+    </a>
+
+</nav>
+
+<header class="header">
+
+    <div class="logo">
+        <span class="logo-icon">✚</span>
+
+        <div>
+            <h1>JeevanSetu</h1>
+            <p>Emergency Assistance</p>
+        </div>
+    </div>
+
+    <a href="index.html" class="back-home">
+        ← Home
+    </a>
+
+</header>
+
+
+<main class="contacts-page">
+
+    <div class="contacts-heading">
+
+        <span>EMERGENCY SAFETY</span>
+
+        <h2>Trusted Contacts</h2>
+
+        <p>
+            Add people you trust so you can quickly contact them
+            during an emergency.
+        </p>
+
+    </div>
+
+
+    <!-- ADD CONTACT -->
+
+    <section class="contact-form-card">
+
+        <h3>➕ Add Emergency Contact</h3>
+
+        <form id="contactForm">
+
+            <div class="input-group">
+
+                <label for="contactName">
+                    Full Name
+                </label>
+
+                <input
+                    type="text"
+                    id="contactName"
+                    placeholder="e.g. Rahul Sharma"
+                    required
+                >
+
+            </div>
+
+
+            <div class="input-group">
+
+                <label for="contactPhone">
+                    Mobile Number
+                </label>
+
+                <input
+                    type="tel"
+                    id="contactPhone"
+                    placeholder="e.g. 9876543210"
+                    pattern="[0-9]{10}"
+                    maxlength="10"
+                    required
+                >
+
+            </div>
+
+
+            <div class="input-group">
+
+                <label for="contactRelation">
+                    Relationship
+                </label>
+
+                <select id="contactRelation" required>
+
+                    <option value="">
+                        Select relationship
+                    </option>
+
+                    <option value="Parent">
+                        Parent
+                    </option>
+
+                    <option value="Sibling">
+                        Sibling
+                    </option>
+
+                    <option value="Friend">
+                        Friend
+                    </option>
+
+                    <option value="Spouse">
+                        Spouse
+                    </option>
+
+                    <option value="Relative">
+                        Relative
+                    </option>
+
+                    <option value="Other">
+                        Other
+                    </option>
+
+                </select>
+
+            </div>
+
+
+            <button type="submit" class="add-contact-btn">
+                + Save Emergency Contact
+            </button>
+
+        </form>
+
+    </section>
+
+
+    <!-- SAVED CONTACTS -->
+
+    <section class="saved-contacts">
+
+        <div class="saved-title">
+
+            <h3>👥 Your Trusted Contacts</h3>
+
+            <span id="contactCount">
+                0 Contacts
+            </span>
+
+        </div>
+
+
+        <div id="contactsList">
+
+            <div class="empty-contacts">
+
+                <div>👥</div>
+
+                <h3>No contacts added yet</h3>
+
+                <p>
+                    Add a trusted person above.
+                </p>
+
+            </div>
+
+        </div>
+
+    </section>
+
+</main>
+
+
+<footer>
+
+    <strong>JeevanSetu</strong>
+
+    <span> | </span>
+
+    Emergency Assistance Platform
+
+    <p>
+        Your safety. Your people. One place.
+    </p>
+
+</footer>
+
+
+<script src="js/app.js"></script>
+
+</body>
+</html>

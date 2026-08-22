@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0">
+
+    <title>First Aid | JeevanSetu</title>
+
+    <link
+        rel="stylesheet"
+        href="css/style.css">
+
+</head>
+
+
+<body>
+
+    <nav class="main-navigation">
+
+    <a href="index.html">
+        🏠 Home
+    </a>
+
+    <a href="assistant.html">
+        🤖 AI Assistant
+    </a>
+
+    <a href="emergency.html">
+        🚨 Emergency
+    </a>
+
+    <a href="first-aid.html">
+        🩹 First Aid
+    </a>
+
+    <a href="contacts.html">
+        📞 Contacts
+    </a>
+
+    <a href="report.html">
+        📝 Report
+    </a>
+
+</nav>
+
+<header class="header">
+
+    <div class="logo">
+
+        <span class="logo-icon">✚</span>
+
+        <div>
+
+            <h1>JeevanSetu</h1>
+
+            <p>Emergency Assistance</p>
+
+        </div>
+
+    </div>
+
+
+    <a
+        href="index.html"
+        class="back-home">
+
+        ← Home
+
+    </a>
+
+</header>
+
+
+
+<main class="first-aid-page">
+
+
+    <!-- PAGE HEADING -->
+
+    <section class="first-aid-heading">
+
+        <span>EMERGENCY FIRST AID</span>
+
+        <h2>Quick First Aid Guide</h2>
+
+        <p>
+
+            Simple first-aid guidance for common
+            emergency situations.
+
+            Stay calm and get professional
+            medical help when needed.
+
+        </p>
+
+    </section>
+
+
+
+    <!-- EMERGENCY NOTICE -->
+
+    <div class="first-aid-alert">
+
+        <div class="alert-icon">
+            ⚠️
+        </div>
+
+        <div>
+
+            <strong>
+                Emergency Notice
+            </strong>
+
+            <p>
+
+                First aid is only temporary assistance.
+                For serious or life-threatening situations,
+                contact emergency medical services immediately.
+
+            </p>
+
+        </div>
+
+    </div>
+
+
+
+    <!-- SEARCH -->
+
+    <div class="first-aid-search">
+
+        <div class="search-icon">
+            🔍
+        </div>
+
+        <input
+            type="text"
+            id="firstAidSearch"
+            placeholder="Search first aid... e.g. burn, bleeding, CPR"
+            autocomplete="off">
+
+    </div>
+
+
+    <p
+        id="noFirstAidResult"
+        class="no-first-aid-result"
+        style="display:none;">
+
+        No matching first-aid guide found.
+
+    </p>
+
+
+
+    <!-- FIRST AID GRID -->
+
+    <section class="first-aid-grid">
+
+
+
+        <!-- BLEEDING -->
+
+        <div
+            class="first-aid-card"
+            data-aid="bleeding blood wound cut">
+
+            <div class="aid-icon">
+                🩸
+            </div>
+
+            <h3>
+                Severe Bleeding
+            </h3>
+
+            <p>
+                For cuts, wounds or heavy bleeding.
+            </p>
+
+            <button
+                type="button"
+                onclick="showFirstAid('bleeding')">
+
+                View First Aid →
+
+            </button>
+
+        </div>
+
+
+
+        <!-- BURNS -->
+
+        <div
+            class="first-aid-card"
+            data-aid="burn burns fire skin">
+
+            <div class="aid-icon">
+                🔥
+            </div>
+
+            <h3>
+                Burns
+            </h3>
+
+            <p>
+                For thermal burns and skin injuries.
+            </p>
+
+            <button
+                type="button"
+                onclick="showFirstAid('burns')">
+
+                View First Aid →
+
+            </button>
+
+        </div>
+
+
+
+        <!-- FAINTING -->
+
+        <div
+            class="first-aid-card"
+            data-aid="fainting faint unconscious">
+
+            <div class="aid-icon">
+                😵
+            </div>
+
+            <h3>
+                Fainting
+            </h3>
+
+            <p>
+                When someone suddenly becomes unconscious.
+            </p>
+
+            <button
+                type="button"
+                onclick="showFirstAid('fainting')">
+
+                View First Aid →
+
+            </button>
+
+        </div>
+
+
+
+        <!-- BREATHING -->
+
+        <div
+            class="first-aid-card"
+            data-aid="breathing breath lungs asthma">
+
+            <div class="aid-icon">
+                🫁
+            </div>
+
+            <h3>
+                Breathing Problem
+            </h3>
+
+            <p>
+                Difficulty breathing or severe breathlessness.
+            </p>
+
+            <button
+                type="button"
+                onclick="showFirstAid('breathing')">
+
+                View First Aid →
+
+            </button>
+
+        </div>
+
+
+
+        <!-- CPR -->
+
+        <div
+            class="first-aid-card"
+            data-aid="cpr heart cardiac unconscious">
+
+            <div class="aid-icon">
+                ❤️
+            </div>
+
+            <h3>
+                CPR
+            </h3>
+
+            <p>
+                Emergency response when someone is unresponsive.
+            </p>
+
+            <button
+                type="button"
+                onclick="showFirstAid('cpr')">
+
+                View First Aid →
+
+            </button>
+
+        </div>
+
+
+
+        <!-- SNAKE BITE -->
+
+        <div
+            class="first-aid-card"
+            data-aid="snake snakebite bite venom">
+
+            <div class="aid-icon">
+                🐍
+            </div>
+
+            <h3>
+                Snake Bite
+            </h3>
+
+            <p>
+                Immediate steps after a suspected snake bite.
+            </p>
+
+            <button
+                type="button"
+                onclick="showFirstAid('snakebite')">
+
+                View First Aid →
+
+            </button>
+
+        </div>
+
+
+
+        <!-- ELECTRIC SHOCK -->
+
+        <div
+            class="first-aid-card"
+            data-aid="electric electricity shock">
+
+            <div class="aid-icon">
+                ⚡
+            </div>
+
+            <h3>
+                Electric Shock
+            </h3>
+
+            <p>
+                What to do after electrical injury.
+            </p>
+
+            <button
+                type="button"
+                onclick="showFirstAid('electric')">
+
+                View First Aid →
+
+            </button>
+
+        </div>
+
+
+
+        <!-- FRACTURE -->
+
+        <div
+            class="first-aid-card"
+            data-aid="fracture bone broken injury">
+
+            <div class="aid-icon">
+                🦴
+            </div>
+
+            <h3>
+                Possible Fracture
+            </h3>
+
+            <p>
+                First aid for suspected broken bones.
+            </p>
+
+            <button
+                type="button"
+                onclick="showFirstAid('fracture')">
+
+                View First Aid →
+
+            </button>
+
+        </div>
+
+
+    </section>
+
+</main>
+
+
+
+<footer>
+
+    <strong>
+        JeevanSetu
+    </strong>
+
+    <span>
+        |
+    </span>
+
+    Emergency Assistance Platform
+
+    <p>
+        Stay calm. Stay safe. Get help.
+    </p>
+
+</footer>
+
+
+
+<script src="js/app.js"></script>
+
+
+</body>
+
+</html>

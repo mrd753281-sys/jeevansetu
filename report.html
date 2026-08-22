@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JeevanSetu | Report</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+    <nav class="main-navigation">
+
+    <a href="index.html">
+        🏠 Home
+    </a>
+
+    <a href="assistant.html">
+        🤖 AI Assistant
+    </a>
+
+    <a href="emergency.html">
+        🚨 Emergency
+    </a>
+
+    <a href="first-aid.html">
+        🩹 First Aid
+    </a>
+
+    <a href="contacts.html">
+        📞 Contacts
+    </a>
+
+    <a href="report.html">
+        📝 Report
+    </a>
+
+</nav>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>JeevanSetu - Report</title>
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body style="background:#f1e7e7;color:#f0eeee;min-height:100vh">
+
+<div style="max-width:600px;margin:20px auto;padding:16px">
+  <h2>Public Safety Report</h2>
+  <p style="color:#080808;font-size:14px;margin-bottom:18px">Report unsafe locations with evidence - connected to server</p>
+
+  <div style="background:#f8f6f6;border:1px solid #cd2d2d;border-radius:20px;padding:20px;margin-bottom:16px">
+    <label style="font-size:12px;color:#04000d">Report Type *</label>
+    <select id="rType" style="width:100%;background:#140251;border:1px solid #db1313;color:#f6efef;padding:12px;border-radius:10px;margin-top:6px">
+      <option value="">Select Type</option>
+      <option value="Unsafe Road">Unsafe Road / Pothole</option>
+      <option value="Accident Spot">Accident Prone Area</option>
+      <option value="Fake Hospital">Fake Hospital</option>
+      <option value="Unsafe Area">Unsafe Area</option>
+      <option value="Other">Other Issue</option>
+    </select>
+
+    <label style="font-size:12px;color:#090000;display:block;margin-top:12px">Location (Auto)</label>
+    <input id="rLoc" readonly style="width:100%;background:#020c5700;border:1px solid #333;color:#fff;padding:12px;border-radius:10px;margin-top:6px">
+
+    <label style="font-size:12px;color:#02010b;display:block;margin-top:12px">Description *</label>
+    <textarea id="rDesc" style="width:100%;background:#1e1e1e;border:1px solid #333;color:#fff;padding:12px;border-radius:10px;margin-top:6px;min-height:90px"></textarea>
+
+    <label style="font-size:12px;color:#aaa;display:block;margin-top:12px">Photo Evidence</label>
+    <input type="file" id="rPhoto" accept="image/*" style="width:100%;background:#1e1e1e;border:1px solid #333;color:#fff;padding:10px;border-radius:10px;margin-top:6px">
+    <img id="rPreview" class="hidden" style="width:100%;border-radius:10px;margin-top:10px">
+
+    <button id="submitBtn" onclick="submitReportToServer()" style="width:100%;padding:14px;background:#ff2a2a;color:#fff;border:none;border-radius:12px;font-weight:700;margin-top:14px;cursor:pointer">Submit Report to Server</button>
+    <button onclick="getLocation()" style="width:100%;padding:14px;background:#222;color:#fff;border:1px solid #333;border-radius:12px;font-weight:700;margin-top:10px;cursor:pointer">Refresh Location</button>
+    <p id="statusMsg" style="font-size:13px;margin-top:10px"></p>
+  </div>
+
+  <div style="background:#02044d;border:1px solid #0f024a;border-radius:20px;padding:20px">
+    <h3>All Reports From Server</h3>
+    <div id="rList" style="margin-top:12px"></div>
+  </div>
+</div>
+
+<script src="js/report.js"></script>
+</body>
+</html>
+</body>
+</html>
