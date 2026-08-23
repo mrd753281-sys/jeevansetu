@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>JeevanSetu | Login</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: #f4f7fb;
+            padding: 20px;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 430px;
+            background: white;
+            border-radius: 18px;
+            padding: 30px;
+            box-shadow: 0 10px 35px rgba(0,0,0,0.10);
+        }
+
+        .logo {
+            text-align: center;
+            margin-bottom: 28px;
+        }
+
+        .logo-icon {
+            width: 60px;
+            height: 60px;
+            margin: auto;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            background: #e53935;
+            color: white;
+            font-size: 30px;
+            font-weight: bold;
+        }
+
+        h1 {
+            margin-top: 12px;
+            color: #1d2939;
+            font-size: 28px;
+        }
+
+        .subtitle {
+            margin-top: 6px;
+            color: #667085;
+            font-size: 14px;
+        }
+
+        .form-group {
+            margin-bottom: 18px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 7px;
+            color: #344054;
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        input {
+            width: 100%;
+            padding: 13px 14px;
+            border: 1px solid #d0d5dd;
+            border-radius: 10px;
+            outline: none;
+            font-size: 15px;
+        }
+
+        input:focus {
+            border-color: #e53935;
+            box-shadow: 0 0 0 3px rgba(229,57,53,0.10);
+        }
+
+        button {
+            width: 100%;
+            border: none;
+            padding: 14px;
+            border-radius: 10px;
+            background: #e53935;
+            color: white;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        button:hover {
+            opacity: 0.92;
+        }
+
+        button:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+
+        .message {
+            display: none;
+            margin-top: 15px;
+            padding: 12px;
+            border-radius: 9px;
+            font-size: 14px;
+            line-height: 1.5;
+        }
+
+        .success {
+            display: block;
+            background: #ecfdf3;
+            color: #027a48;
+        }
+
+        .error {
+            display: block;
+            background: #fef3f2;
+            color: #b42318;
+        }
+
+        .register-link {
+            text-align: center;
+            margin-top: 20px;
+            color: #667085;
+            font-size: 14px;
+        }
+
+        .register-link a {
+            color: #e53935;
+            font-weight: bold;
+            text-decoration: none;
+        }
+
+        .home {
+            text-align: center;
+            margin-top: 15px;
+        }
+
+        .home a {
+            color: #667085;
+            font-size: 13px;
+            text-decoration: none;
+        }
+
+        @media(max-width:480px) {
+            .container {
+                padding: 24px 20px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <div class="logo">
+
+        <div class="logo-icon">✚</div>
+
+        <h1>JeevanSetu</h1>
+
+        <p class="subtitle">
+            Login to your emergency assistance account
+        </p>
+
+    </div>
+
+
+    <form id="loginForm">
+
+        <div class="form-group">
+
+            <label for="email">
+                Email Address
+            </label>
+
+            <input
+                type="email"
+                id="email"
+                placeholder="Enter your email"
+                autocomplete="email"
+                required
+            >
+
+        </div>
+
+
+        <div class="form-group">
+
+            <label for="password">
+                Password
+            </label>
+
+            <input
+                type="password"
+                id="password"
+                placeholder="Enter your password"
+                autocomplete="current-password"
+                required
+            >
+
+        </div>
+
+
+        <button
+            type="submit"
+            id="loginBtn">
+
+            Login
+
+        </button>
+
+    </form>
+
+
+    <div id="message" class="message"></div>
+
+
+    <div class="register-link">
+
+        Don't have an account?
+
+        <a href="register.html">
+            Create Account
+        </a>
+
+    </div>
+
+
+    <div class="home">
+
+        <a href="index.html">
+            ← Back to JeevanSetu
+        </a>
+
+    </div>
+
+</div>
+
+
+<!-- Supabase -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<script>
+
+const SUPABASE_URL =
+    "https://ibhpzcpezurgqckeejqo.supabase.co";
+
+const SUPABASE_PUBLISHABLE_KEY =
+    "sb_publishable_ahSzgt4tiAtdS1hTOD-26g_3o8VnEMJ";
+
+const supabaseClient =
+    window.supabase.createClient(
+        SUPABASE_URL,
+        SUPABASE_PUBLISHABLE_KEY
+    );
+
+
+const form =
+    document.getElementById("loginForm");
+
+const button =
+    document.getElementById("loginBtn");
+
+const message =
+    document.getElementById("message");
+
+
+function showMessage(text, type) {
+
+    message.textContent = text;
+
+    message.className =
+        "message " + type;
+}
+
+
+/*
+ * Login
+ */
+
+form.addEventListener("submit", async function(event) {
+
+    event.preventDefault();
+
+
+    const email =
+        document.getElementById("email")
+        .value
+        .trim();
+
+    const password =
+        document.getElementById("password")
+        .value;
+
+
+    if (!email || !password) {
+
+        showMessage(
+            "Please enter email and password.",
+            "error"
+        );
+
+        return;
+    }
+
+
+    button.disabled = true;
+    button.textContent = "Logging in...";
+
+
+    try {
+
+        const {
+            data,
+            error
+        } =
+        await supabaseClient.auth.signInWithPassword({
+
+            email: email,
+
+            password: password
+
+        });
+
+
+        if (error) {
+            throw error;
+        }
+
+
+        if (!data.session) {
+
+            throw new Error(
+                "Login session could not be created."
+            );
+
+        }
+
+
+        showMessage(
+            "Login successful! Opening JeevanSetu...",
+            "success"
+        );
+
+
+        setTimeout(function() {
+
+            window.location.href =
+                "index.html";
+
+        }, 700);
+
+
+    } catch(error) {
+
+        console.error(
+            "Login Error:",
+            error
+        );
+
+
+        showMessage(
+            error.message ||
+            "Invalid email or password.",
+            "error"
+        );
+
+
+    } finally {
+
+        button.disabled = false;
+        button.textContent = "Login";
+
+    }
+
+});
+
+</script>
+
+</body>
+</html>
