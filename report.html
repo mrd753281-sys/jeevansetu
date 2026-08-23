@@ -442,9 +442,9 @@
                 Report Type <span class="required">*</span>
             </label>
 
-            <select id="reportType">
+            <select id="reportType" style="color: #fff; background: #1602f6; border-color: #1a1040;">
 
-                <option value="">
+                <option value="" style="color: #edeef0;" disabled selected>
                     Select Type
                 </option>
 
@@ -838,6 +838,10 @@ async function checkSession() {
 // GET GPS LOCATION
 // =====================================================
 
+// =====================================================
+// GET GPS LOCATION - FIXED
+// =====================================================
+
 function getLocation() {
 
     if (!navigator.geolocation) {
@@ -848,22 +852,17 @@ function getLocation() {
         );
 
         return;
-
     }
-
 
     showLocationStatus(
         "📡 Getting GPS location... Please allow location access.",
         "location-loading"
     );
 
-
     locationInput.placeholder =
         "Getting GPS location...";
 
-
-    refreshLocationBtn.disabled =
-        true;
+    refreshLocationBtn.disabled = true;
 
 
     navigator.geolocation.getCurrentPosition(
@@ -877,17 +876,13 @@ function getLocation() {
                 position.coords.longitude;
 
 
-            // Save coordinates
-            latitudeInput.value =
-                lat;
-
-            longitudeInput.value =
-                lon;
+            // Save GPS coordinates
+            latitudeInput.value = lat;
+            longitudeInput.value = lon;
 
 
-            coordinatesBox.style.display =
-                "block";
-
+            // Show coordinates
+            coordinatesBox.style.display = "block";
 
             coordinatesBox.textContent =
                 "GPS: " +
@@ -896,7 +891,7 @@ function getLocation() {
                 lon.toFixed(6);
 
 
-            // Initial value
+            // First show coordinates
             locationInput.value =
                 lat.toFixed(6) +
                 ", " +
@@ -904,20 +899,16 @@ function getLocation() {
 
 
             showLocationStatus(
-                "📍 GPS location found. Converting to address...",
+                "📍 GPS found. Converting to address...",
                 "location-loading"
             );
 
 
-            // Reverse geocoding
-            await convertGPSIntoAddress(
-                lat,
-                lon
-            );
+            // Convert GPS → Address
+            await convertGPSIntoAddress(lat, lon);
 
 
-            refreshLocationBtn.disabled =
-                false;
+            refreshLocationBtn.disabled = false;
 
         },
 
@@ -929,56 +920,56 @@ function getLocation() {
                 error
             );
 
-
-            refreshLocationBtn.disabled =
-                false;
-
-
-            let message =
-                "❌ Unable to get location.";
+            refreshLocationBtn.disabled = false;
 
 
             if (error.code === 1) {
 
-                message =
-                    "❌ Location permission denied. Please allow GPS access.";
+                showLocationStatus(
+                    "❌ Location permission denied. Please allow GPS access.",
+                    "location-error"
+                );
 
             }
 
             else if (error.code === 2) {
 
-                message =
-                    "❌ Location unavailable. Try again.";
+                showLocationStatus(
+                    "❌ Location unavailable. Please try again.",
+                    "location-error"
+                );
 
             }
 
             else if (error.code === 3) {
 
-                message =
-                    "❌ Location request timed out. Try again.";
+                showLocationStatus(
+                    "❌ GPS request timed out. Please try again.",
+                    "location-error"
+                );
+
+            }
+
+            else {
+
+                showLocationStatus(
+                    "❌ Unable to get GPS location.",
+                    "location-error"
+                );
 
             }
 
 
-            showLocationStatus(
-                message,
-                "location-error"
-            );
-
-
             locationInput.placeholder =
-                "You can type the location manually.";
+                "Enter location manually if GPS fails.";
 
         },
 
 
         {
             enableHighAccuracy: true,
-
-            timeout: 15000,
-
+            timeout: 20000,
             maximumAge: 0
-
         }
 
     );
@@ -988,6 +979,7 @@ function getLocation() {
 
 // =====================================================
 // GPS → ADDRESS
+// OpenStreetMap Nominatim
 // =====================================================
 
 async function convertGPSIntoAddress(
@@ -1024,7 +1016,7 @@ async function convertGPSIntoAddress(
         if (!response.ok) {
 
             throw new Error(
-                "Reverse geocoding failed"
+                "Address service unavailable"
             );
 
         }
@@ -1044,7 +1036,7 @@ async function convertGPSIntoAddress(
 
 
             showLocationStatus(
-                "✅ GPS location converted to address.",
+                "✅ GPS location detected successfully.",
                 "location-success"
             );
 
@@ -1053,34 +1045,37 @@ async function convertGPSIntoAddress(
         else {
 
             showLocationStatus(
-                "✅ GPS found. Address unavailable, coordinates saved.",
-                "location-success"
+                "✅ GPS found, but address could not be converted.",
+                "location-error"
             );
 
         }
 
     }
 
-    catch (error) {
+    catch(error) {
 
         console.error(
-            "Address Conversion Error:",
+            "GPS Address Conversion Error:",
             error
         );
 
 
-        // GPS coordinates remain in input
+        // IMPORTANT:
+        // GPS coordinates remain available
+        // even if address conversion fails.
+
+        locationInput.value =
+            lat.toFixed(6) +
+            ", " +
+            lon.toFixed(6);
+
+
         showLocationStatus(
-            "✅ GPS found. Address conversion unavailable; coordinates saved.",
-            "location-success"
+            "✅ GPS found. Address conversion unavailable.",
+            "location-error"
         );
 
     }
 
 }
-
-
-// =====================================================
-// OPEN MAP
-// =====================================================
-
