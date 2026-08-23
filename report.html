@@ -1,14 +1,336 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
+
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>JeevanSetu | Report</title>
-    <link rel="stylesheet" href="style.css">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>JeevanSetu | Report Unsafe Location</title>
+
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+
+    <!-- Supabase -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            background: #fef2f2;
+            font-family: Arial, sans-serif;
+            color: #1d2939;
+        }
+
+        .page-container {
+            width: 100%;
+            max-width: 520px;
+            margin: auto;
+            padding: 20px 15px 40px;
+        }
+
+        .top-bar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 18px;
+        }
+
+        .back-btn {
+            text-decoration: none;
+            color: #344054;
+            font-weight: bold;
+            font-size: 14px;
+        }
+
+        .user-status {
+            font-size: 12px;
+            color: #027a48;
+            font-weight: bold;
+        }
+
+        .main-title {
+            text-align: center;
+            font-size: 27px;
+            font-weight: 800;
+            margin: 8px 0 5px;
+            color: #1d2939;
+        }
+
+        .subtitle {
+            text-align: center;
+            color: #667085;
+            font-size: 14px;
+            margin-bottom: 22px;
+        }
+
+        .report-card {
+            background: white;
+            border: 1px solid #fecaca;
+            border-radius: 22px;
+            padding: 22px;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.06);
+        }
+
+        .form-group {
+            margin-bottom: 19px;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 8px;
+            font-size: 14px;
+            font-weight: 700;
+            color: #344054;
+        }
+
+        .required {
+            color: #e53935;
+        }
+
+        select,
+        input[type="text"],
+        textarea {
+            width: 100%;
+            border: 2px solid #d0d5dd;
+            border-radius: 12px;
+            padding: 13px 14px;
+            font-size: 14px;
+            outline: none;
+            background: white;
+            transition: 0.2s;
+        }
+
+        select {
+            background: #1a1040;
+            color: white;
+            border-color: #1a1040;
+        }
+
+        select:focus,
+        input[type="text"]:focus,
+        textarea:focus {
+            border-color: #e53935;
+            box-shadow: 0 0 0 3px rgba(229, 57, 53, 0.10);
+        }
+
+        textarea {
+            min-height: 110px;
+            resize: vertical;
+        }
+
+        .location-box {
+            position: relative;
+        }
+
+        .location-status {
+            margin-top: 7px;
+            font-size: 12px;
+            font-weight: 700;
+            min-height: 17px;
+        }
+
+        .location-success {
+            color: #027a48;
+        }
+
+        .location-error {
+            color: #b42318;
+        }
+
+        .location-loading {
+            color: #475467;
+        }
+
+        .coordinates {
+            margin-top: 8px;
+            padding: 9px 11px;
+            background: #f8fafc;
+            border-radius: 9px;
+            color: #667085;
+            font-size: 11px;
+            display: none;
+        }
+
+        .location-buttons {
+            display: flex;
+            gap: 8px;
+            margin-top: 9px;
+        }
+
+        .location-btn {
+            flex: 1;
+            border: none;
+            border-radius: 10px;
+            padding: 11px;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 13px;
+        }
+
+        .gps-btn {
+            background: #111827;
+            color: white;
+        }
+
+        .map-btn {
+            background: #fef2f2;
+            color: #b42318;
+            border: 1px solid #fecaca;
+        }
+
+        .location-btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+
+        .file-box {
+            width: 100%;
+            background: #111827;
+            color: white;
+            padding: 12px;
+            border-radius: 11px;
+            font-size: 13px;
+        }
+
+        .photo-preview {
+            display: none;
+            margin-top: 10px;
+            width: 100%;
+            max-height: 220px;
+            object-fit: cover;
+            border-radius: 12px;
+            border: 1px solid #e4e7ec;
+        }
+
+        .submit-btn {
+            width: 100%;
+            border: none;
+            background: #e53935;
+            color: white;
+            padding: 14px;
+            border-radius: 12px;
+            font-size: 15px;
+            font-weight: 800;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .submit-btn:hover {
+            opacity: 0.92;
+        }
+
+        .submit-btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+
+        .status-message {
+            min-height: 20px;
+            margin-top: 13px;
+            text-align: center;
+            font-size: 13px;
+            font-weight: 700;
+        }
+
+        .success {
+            color: #027a48;
+        }
+
+        .error {
+            color: #b42318;
+        }
+
+        .info {
+            color: #475467;
+        }
+
+        .reports-title {
+            margin: 25px 0 12px;
+            font-size: 18px;
+            font-weight: 800;
+        }
+
+        .report-item {
+            background: white;
+            padding: 15px;
+            margin-bottom: 10px;
+            border-radius: 15px;
+            border: 1px solid #e4e7ec;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.04);
+        }
+
+        .report-type {
+            font-weight: 800;
+            color: #1d2939;
+        }
+
+        .report-location {
+            margin-top: 5px;
+            color: #667085;
+            font-size: 12px;
+        }
+
+        .report-description {
+            margin-top: 8px;
+            color: #344054;
+            font-size: 14px;
+            line-height: 1.5;
+        }
+
+        .submitted {
+            margin-top: 8px;
+            color: #027a48;
+            font-size: 11px;
+            font-weight: 800;
+        }
+
+        .empty-message {
+            background: white;
+            padding: 18px;
+            text-align: center;
+            color: #98a2b3;
+            border-radius: 14px;
+            font-size: 13px;
+        }
+
+        @media (max-width: 480px) {
+
+            .page-container {
+                padding: 15px 12px 35px;
+            }
+
+            .report-card {
+                padding: 18px;
+                border-radius: 18px;
+            }
+
+            .main-title {
+                font-size: 24px;
+            }
+
+        }
+
+    </style>
+
 </head>
+
+
 <body>
 
-    <nav class="main-navigation">
+     <nav class="main-navigation">
 
     <a href="index.html">
         🏠 Home
@@ -36,54 +358,699 @@
 
 </nav>
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>JeevanSetu - Report</title>
-<link rel="stylesheet" href="css/style.css">
-</head>
-<body style="background:#f1e7e7;color:#f0eeee;min-height:100vh">
 
-<div style="max-width:600px;margin:20px auto;padding:16px">
-  <h2>Public Safety Report</h2>
-  <p style="color:#080808;font-size:14px;margin-bottom:18px">Report unsafe locations with evidence - connected to server</p>
 
-  <div style="background:#f8f6f6;border:1px solid #cd2d2d;border-radius:20px;padding:20px;margin-bottom:16px">
-    <label style="font-size:12px;color:#04000d">Report Type *</label>
-    <select id="rType" style="width:100%;background:#140251;border:1px solid #db1313;color:#f6efef;padding:12px;border-radius:10px;margin-top:6px">
-      <option value="">Select Type</option>
-      <option value="Unsafe Road">Unsafe Road / Pothole</option>
-      <option value="Accident Spot">Accident Prone Area</option>
-      <option value="Fake Hospital">Fake Hospital</option>
-      <option value="Unsafe Area">Unsafe Area</option>
-      <option value="Other">Other Issue</option>
-    </select>
+<div class="page-container">
 
-    <label style="font-size:12px;color:#090000;display:block;margin-top:12px">Location (Auto)</label>
-    <input id="rLoc" readonly style="width:100%;background:#020c5700;border:1px solid #333;color:#fff;padding:12px;border-radius:10px;margin-top:6px">
 
-    <label style="font-size:12px;color:#02010b;display:block;margin-top:12px">Description *</label>
-    <textarea id="rDesc" style="width:100%;background:#1e1e1e;border:1px solid #333;color:#fff;padding:12px;border-radius:10px;margin-top:6px;min-height:90px"></textarea>
+    <!-- TOP BAR -->
 
-    <label style="font-size:12px;color:#aaa;display:block;margin-top:12px">Photo Evidence</label>
-    <input type="file" id="rPhoto" accept="image/*" style="width:100%;background:#1e1e1e;border:1px solid #333;color:#fff;padding:10px;border-radius:10px;margin-top:6px">
-    <img id="rPreview" class="hidden" style="width:100%;border-radius:10px;margin-top:10px">
+    <div class="top-bar">
 
-    <button id="submitBtn" onclick="submitReportToServer()" style="width:100%;padding:14px;background:#ff2a2a;color:#fff;border:none;border-radius:12px;font-weight:700;margin-top:14px;cursor:pointer">Submit Report to Server</button>
-    <button onclick="getLocation()" style="width:100%;padding:14px;background:#222;color:#fff;border:1px solid #333;border-radius:12px;font-weight:700;margin-top:10px;cursor:pointer">Refresh Location</button>
-    <p id="statusMsg" style="font-size:13px;margin-top:10px"></p>
-  </div>
+        <a
+            href="index.html"
+            class="back-btn"
+        >
+            ← JeevanSetu
+        </a>
 
-  <div style="background:#02044d;border:1px solid #0f024a;border-radius:20px;padding:20px">
-    <h3>All Reports From Server</h3>
-    <div id="rList" style="margin-top:12px"></div>
-  </div>
+        <span
+            id="userStatus"
+            class="user-status"
+        >
+            Checking...
+        </span>
+
+    </div>
+
+
+    <!-- TITLE -->
+
+    <h1 class="main-title">
+        🚨 Report Unsafe Location
+    </h1>
+
+    <p class="subtitle">
+        Help make your community safer by reporting unsafe places.
+    </p>
+
+
+    <!-- REPORT CARD -->
+
+    <div class="report-card">
+
+
+        <!-- REPORT TYPE -->
+
+        <div class="form-group">
+
+            <label
+                class="form-label"
+                for="reportType"
+            >
+                Report Type <span class="required">*</span>
+            </label>
+
+            <select id="reportType">
+
+                <option value="">
+                    Select Type
+                </option>
+
+                <option value="Harassment">
+                    Harassment
+                </option>
+
+                <option value="Unsafe Area">
+                    Unsafe Area
+                </option>
+
+                <option value="Poor Lighting">
+                    Poor Lighting
+                </option>
+
+                <option value="Stalking / Following">
+                    Stalking / Following
+                </option>
+
+                <option value="Other">
+                    Other
+                </option>
+
+            </select>
+
+        </div>
+
+
+        <!-- LOCATION -->
+
+        <div class="form-group">
+
+            <label
+                class="form-label"
+                for="locationInput"
+            >
+                Location <span class="required">*</span>
+            </label>
+
+
+            <div class="location-box">
+
+                <input
+                    id="locationInput"
+                    type="text"
+                    placeholder="Getting your GPS location..."
+                    autocomplete="off"
+                >
+
+
+                <div
+                    id="locationStatus"
+                    class="location-status location-loading"
+                >
+                    📡 Getting location...
+                </div>
+
+
+                <div
+                    id="coordinates"
+                    class="coordinates"
+                >
+                </div>
+
+
+                <input
+                    type="hidden"
+                    id="latitude"
+                >
+
+                <input
+                    type="hidden"
+                    id="longitude"
+                >
+
+
+                <div class="location-buttons">
+
+                    <button
+                        type="button"
+                        id="refreshLocationBtn"
+                        class="location-btn gps-btn"
+                    >
+                        🔄 Refresh GPS
+                    </button>
+
+
+                    <button
+                        type="button"
+                        id="mapBtn"
+                        class="location-btn map-btn"
+                    >
+                        🗺️ Open Map
+                    </button>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- DESCRIPTION -->
+
+        <div class="form-group">
+
+            <label
+                class="form-label"
+                for="descInput"
+            >
+                Description <span class="required">*</span>
+            </label>
+
+            <textarea
+                id="descInput"
+                placeholder="Describe what happened or why this location is unsafe..."
+            ></textarea>
+
+        </div>
+
+
+        <!-- PHOTO -->
+
+        <div class="form-group">
+
+            <label
+                class="form-label"
+                for="photoInput"
+            >
+                Photo Evidence
+            </label>
+
+            <input
+                id="photoInput"
+                type="file"
+                accept="image/*"
+                class="file-box"
+            >
+
+
+            <img
+                id="photoPreview"
+                class="photo-preview"
+                alt="Selected evidence preview"
+            >
+
+        </div>
+
+
+        <!-- SUBMIT -->
+
+        <button
+            type="button"
+            id="submitBtn"
+            class="submit-btn"
+        >
+            🚨 Submit Report
+        </button>
+
+
+        <!-- STATUS -->
+
+        <div
+            id="status"
+            class="status-message"
+        >
+        </div>
+
+
+    </div>
+
+
+    <!-- REPORTS -->
+
+    <h2 class="reports-title">
+        Recent Reports
+    </h2>
+
+
+    <div id="reportsList">
+
+        <div class="empty-message">
+            No reports submitted in this session.
+        </div>
+
+    </div>
+
+
 </div>
 
-<script src="report.js"></script>
-</body>
-</html>
-</body>
-</html>
+
+<script>
+
+
+// =====================================================
+// JeevanSetu - REPORT SYSTEM
+// =====================================================
+
+
+// =====================================================
+// SUPABASE CONFIGURATION
+// =====================================================
+
+const SUPABASE_URL =
+    "https://ibhpzcpezurgqckeejqo.supabase.co";
+
+
+const SUPABASE_PUBLISHABLE_KEY =
+    "sb_publishable_ahSzgt4tiAtD1sH1TOD-26g_3o8VnEMJ";
+
+
+const supabaseClient =
+    window.supabase.createClient(
+        SUPABASE_URL,
+        SUPABASE_PUBLISHABLE_KEY
+    );
+
+
+// =====================================================
+// ELEMENTS
+// =====================================================
+
+const reportType =
+    document.getElementById("reportType");
+
+const locationInput =
+    document.getElementById("locationInput");
+
+const descInput =
+    document.getElementById("descInput");
+
+const photoInput =
+    document.getElementById("photoInput");
+
+const photoPreview =
+    document.getElementById("photoPreview");
+
+const latitudeInput =
+    document.getElementById("latitude");
+
+const longitudeInput =
+    document.getElementById("longitude");
+
+const coordinatesBox =
+    document.getElementById("coordinates");
+
+const locationStatus =
+    document.getElementById("locationStatus");
+
+const submitBtn =
+    document.getElementById("submitBtn");
+
+const refreshLocationBtn =
+    document.getElementById("refreshLocationBtn");
+
+const mapBtn =
+    document.getElementById("mapBtn");
+
+const statusBox =
+    document.getElementById("status");
+
+const reportsList =
+    document.getElementById("reportsList");
+
+const userStatus =
+    document.getElementById("userStatus");
+
+
+// =====================================================
+// CURRENT USER
+// =====================================================
+
+let currentUser = null;
+
+
+// =====================================================
+// SHOW STATUS
+// =====================================================
+
+function showStatus(message, type = "info") {
+
+    statusBox.textContent = message;
+
+    statusBox.className =
+        "status-message " + type;
+
+}
+
+
+// =====================================================
+// LOCATION STATUS
+// =====================================================
+
+function showLocationStatus(
+    message,
+    type = "location-loading"
+) {
+
+    locationStatus.textContent =
+        message;
+
+    locationStatus.className =
+        "location-status " + type;
+
+}
+
+
+// =====================================================
+// CHECK LOGIN SESSION
+// =====================================================
+
+async function checkSession() {
+
+    try {
+
+        const {
+            data,
+            error
+        } =
+        await supabaseClient.auth.getSession();
+
+
+        if (error) {
+
+            throw error;
+
+        }
+
+
+        if (!data.session) {
+
+            userStatus.textContent =
+                "Login required";
+
+            showStatus(
+                "Please login to submit a report.",
+                "error"
+            );
+
+            submitBtn.disabled = true;
+
+            setTimeout(() => {
+
+                window.location.href =
+                    "login.html";
+
+            }, 1800);
+
+            return;
+
+        }
+
+
+        currentUser =
+            data.session.user;
+
+
+        userStatus.textContent =
+            "● Logged in";
+
+
+        submitBtn.disabled = false;
+
+
+        // Automatically get GPS
+        getLocation();
+
+    }
+
+    catch (error) {
+
+        console.error(
+            "Session Error:",
+            error
+        );
+
+        userStatus.textContent =
+            "Session error";
+
+        showStatus(
+            "Unable to verify your login session.",
+            "error"
+        );
+
+    }
+
+}
+
+
+// =====================================================
+// GET GPS LOCATION
+// =====================================================
+
+function getLocation() {
+
+    if (!navigator.geolocation) {
+
+        showLocationStatus(
+            "❌ GPS is not supported by this browser.",
+            "location-error"
+        );
+
+        return;
+
+    }
+
+
+    showLocationStatus(
+        "📡 Getting GPS location... Please allow location access.",
+        "location-loading"
+    );
+
+
+    locationInput.placeholder =
+        "Getting GPS location...";
+
+
+    refreshLocationBtn.disabled =
+        true;
+
+
+    navigator.geolocation.getCurrentPosition(
+
+        async function(position) {
+
+            const lat =
+                position.coords.latitude;
+
+            const lon =
+                position.coords.longitude;
+
+
+            // Save coordinates
+            latitudeInput.value =
+                lat;
+
+            longitudeInput.value =
+                lon;
+
+
+            coordinatesBox.style.display =
+                "block";
+
+
+            coordinatesBox.textContent =
+                "GPS: " +
+                lat.toFixed(6) +
+                ", " +
+                lon.toFixed(6);
+
+
+            // Initial value
+            locationInput.value =
+                lat.toFixed(6) +
+                ", " +
+                lon.toFixed(6);
+
+
+            showLocationStatus(
+                "📍 GPS location found. Converting to address...",
+                "location-loading"
+            );
+
+
+            // Reverse geocoding
+            await convertGPSIntoAddress(
+                lat,
+                lon
+            );
+
+
+            refreshLocationBtn.disabled =
+                false;
+
+        },
+
+
+        function(error) {
+
+            console.error(
+                "GPS Error:",
+                error
+            );
+
+
+            refreshLocationBtn.disabled =
+                false;
+
+
+            let message =
+                "❌ Unable to get location.";
+
+
+            if (error.code === 1) {
+
+                message =
+                    "❌ Location permission denied. Please allow GPS access.";
+
+            }
+
+            else if (error.code === 2) {
+
+                message =
+                    "❌ Location unavailable. Try again.";
+
+            }
+
+            else if (error.code === 3) {
+
+                message =
+                    "❌ Location request timed out. Try again.";
+
+            }
+
+
+            showLocationStatus(
+                message,
+                "location-error"
+            );
+
+
+            locationInput.placeholder =
+                "You can type the location manually.";
+
+        },
+
+
+        {
+            enableHighAccuracy: true,
+
+            timeout: 15000,
+
+            maximumAge: 0
+
+        }
+
+    );
+
+}
+
+
+// =====================================================
+// GPS → ADDRESS
+// =====================================================
+
+async function convertGPSIntoAddress(
+    lat,
+    lon
+) {
+
+    try {
+
+        const url =
+            "https://nominatim.openstreetmap.org/reverse" +
+            "?format=jsonv2" +
+            "&lat=" +
+            encodeURIComponent(lat) +
+            "&lon=" +
+            encodeURIComponent(lon) +
+            "&zoom=18" +
+            "&addressdetails=1";
+
+
+        const response =
+            await fetch(url, {
+
+                method: "GET",
+
+                headers: {
+                    "Accept":
+                        "application/json"
+                }
+
+            });
+
+
+        if (!response.ok) {
+
+            throw new Error(
+                "Reverse geocoding failed"
+            );
+
+        }
+
+
+        const data =
+            await response.json();
+
+
+        if (
+            data &&
+            data.display_name
+        ) {
+
+            locationInput.value =
+                data.display_name;
+
+
+            showLocationStatus(
+                "✅ GPS location converted to address.",
+                "location-success"
+            );
+
+        }
+
+        else {
+
+            showLocationStatus(
+                "✅ GPS found. Address unavailable, coordinates saved.",
+                "location-success"
+            );
+
+        }
+
+    }
+
+    catch (error) {
+
+        console.error(
+            "Address Conversion Error:",
+            error
+        );
+
+
+        // GPS coordinates remain in input
+        showLocationStatus(
+            "✅ GPS found. Address conversion unavailable; coordinates saved.",
+            "location-success"
+        );
+
+    }
+
+}
+
+
+// =====================================================
+// OPEN MAP
+// =====================================================
+
+m
